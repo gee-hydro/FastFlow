@@ -15,6 +15,7 @@ bool  CreateGeoTIFF(char* path,int height, int width,void* pData, GDALDataType t
 	GDALDriver* poDriver = GetGDALDriverManager()->GetDriverByName("GTiff");
     char **papszOptions = NULL;
 	papszOptions = CSLSetNameValue(papszOptions, "COMPRESS", "LZW");
+	papszOptions = CSLSetNameValue(papszOptions, "TILED", "YES");
 	papszOptions = CSLSetNameValue(papszOptions, "BIGTIFF", "IF_NEEDED"); //配置图像信息
 	poDataset = poDriver->Create(path, width, height, 1, type,
 								 papszOptions);
@@ -24,7 +25,6 @@ bool  CreateGeoTIFF(char* path,int height, int width,void* pData, GDALDataType t
 	}
 	if (geoTransformArray6Eles != NULL)
 		poDataset->SetGeoTransform(geoTransformArray6Eles);
-
 
 	GDALRasterBand* poBand;
 	poBand= poDataset->GetRasterBand(1);
