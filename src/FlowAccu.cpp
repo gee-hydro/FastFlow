@@ -40,7 +40,7 @@ bool FlowAccu::is_NoData(unsigned int row, unsigned int col) const
 }
 void FlowAccu::Assign_NoData()
 {
-	for (int i=0; i<width*height; i++)
+	for (bigint i=0; i<width*height; i++)
 		pData[i]=-9999;
 }
 unsigned int FlowAccu::Get_NY() const

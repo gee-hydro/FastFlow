@@ -1,0 +1,7 @@
+*.o
+*.tif
+*.xml
+*.ovr
+FastFlow
+
+*.out

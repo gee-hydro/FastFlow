@@ -14,8 +14,10 @@ bool  CreateGeoTIFF(char* path,int height, int width,void* pData, GDALDataType t
  
 	GDALDriver* poDriver = GetGDALDriverManager()->GetDriverByName("GTiff");
     char **papszOptions = NULL;
-    poDataset = poDriver->Create(path,width, height, 1, type, 
-                                papszOptions );
+	papszOptions = CSLSetNameValue(papszOptions, "COMPRESS", "LZW");
+	papszOptions = CSLSetNameValue(papszOptions, "BIGTIFF", "IF_NEEDED"); //配置图像信息
+	poDataset = poDriver->Create(path, width, height, 1, type,
+								 papszOptions);
 	if(poDataset == NULL)
 	{
 		const char* errorMsg = CPLGetLastErrorMsg();

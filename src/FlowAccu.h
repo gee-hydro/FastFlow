@@ -6,11 +6,14 @@
 #include <fstream>
 #include <queue>
 #include <functional>
+
+typedef long long int bigint;
+
 class FlowAccu
 {
 private:
 	int* pData;
-	unsigned int width, height;
+	bigint width, height;
 
 public:
 	FlowAccu()

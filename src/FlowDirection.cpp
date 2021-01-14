@@ -35,7 +35,7 @@ bool FlowDirection::is_NoData(int row, int col) const
 }
 void FlowDirection::Assign_NoData()
 {
-	for (int i = 0; i < width*height; i++)
+	for (bigint i = 0; i < width*height; i++)
 		pDir[i] = NODATA;
 }
 int FlowDirection::Get_NY() const

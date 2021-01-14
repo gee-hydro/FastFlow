@@ -182,12 +182,13 @@ void FillDEMAndComputeFlowDirection(char* inputFile, char* outputDirPath)
 		return;
 	}
 	
-	int width = dem.Get_NX();
-	int height = dem.Get_NY();
-	cout<<"DEM width:"<<width<<"\theight£º"<<height<<endl;
+	bigint width = dem.Get_NX();
+	bigint height = dem.Get_NY();
 	
 	//Prepare a flag array of Boolean values
-	int nums = (width * height + 7) / 8;
+	bigint nums = (width * height + 7) / 8;
+	cout<<"DEM width:"<<width<<"\theightï¼š"<<height<<"\tnumsï¼š"<<nums << endl;
+
 	unsigned char* flagArray = new unsigned char[nums]();
 
 	//Flow direction matrix
@@ -245,7 +246,7 @@ void FillDEMAndComputeFlowDirection(char* inputFile, char* outputDirPath)
 		if (count % percentFive == 0)
 		{
 			int percentNum = count / percentFive;
-			cout<<"Progress£º"<<percentNum * 5 <<"%\r";
+			cout<<"Progressï¼š"<<percentNum * 5 <<"%\r";
 		}
 		Node tmpNode = queue.top();
 		queue.pop();
@@ -299,7 +300,6 @@ void FillDEMAndComputeFlowDirection(char* inputFile, char* outputDirPath)
 
 	}
 	cout<<"Finish filling depressions and calculating flow direciton matrix."<<endl;
-
 
 	timeEnd = time(NULL);
 	double consumeTime = difftime(timeEnd, timeStart);
@@ -360,7 +360,7 @@ int main(int argc, char* argv[])
 		accuGrid.SetHeight(dirGrid.Get_NY());
 		if(!accuGrid.Allocate())
 		{
-			fprintf(stderr, "Failed to allocate memory for accumulation matrix£¡\n");
+			fprintf(stderr, "Failed to allocate memory for accumulation matrixï¼\n");
 			return 0;
 		}
 		accuMethodByWang(dirGrid, accuGrid, &consumeTime);
@@ -379,7 +379,7 @@ int main(int argc, char* argv[])
 		accuGrid.SetHeight(dirGrid.Get_NY());
 		if(!accuGrid.Allocate())
 		{
-			fprintf(stderr, "Failed to allocate memory for accumulation matrix£¡\n");
+			fprintf(stderr, "Failed to allocate memory for accumulation matrixï¼\n");
 			return 0;
 		}
 		accuMethodByJiang(dirGrid, accuGrid, &consumeTime);
@@ -398,7 +398,7 @@ int main(int argc, char* argv[])
 		accuGrid.SetHeight(dirGrid.Get_NY());
 		if(!accuGrid.Allocate())
 		{
-			fprintf(stderr, "Failed to allocate memory for accumulation matrix£¡\n");
+			fprintf(stderr, "Failed to allocate memory for accumulation matrixï¼\n");
 			return 0;
 		}
 		accuMethodByBTI(dirGrid, accuGrid, &consumeTime);
@@ -417,7 +417,7 @@ int main(int argc, char* argv[])
 		accuGrid.SetHeight(dirGrid.Get_NY());
 		if(!accuGrid.Allocate())
 		{
-			fprintf(stderr, "Failed to allocate memory for accumulation matrix£¡\n");
+			fprintf(stderr, "Failed to allocate memory for accumulation matrixï¼\n");
 			return 0;
 		}
 		accuMethodByRecursive(dirGrid, accuGrid, &consumeTime);
@@ -436,7 +436,7 @@ int main(int argc, char* argv[])
 		accuGrid.SetHeight(dirGrid.Get_NY());
 		if(!accuGrid.Allocate())
 		{
-			fprintf(stderr, "Failed to allocate memory for accumulation matrix£¡\n");
+			fprintf(stderr, "Failed to allocate memory for accumulation matrixï¼\n");
 			return 0;
 		}
 		accuMethodByZhou(dirGrid, accuGrid, &consumeTime);

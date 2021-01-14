@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(gdb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            // "args": ["Zhou", "logan_flowdir.tif", "logan_flowaccu.tif"],
+            // "args": [
+            //     "Zhou",
+            //     // "/mnt/i/taudem/data-dem/merit90_china_flowdir.tif",
+            //     "/mnt/i/taudem/data-dem/merit_changjiang_flowdir.tif",
+            //     "merit_changjiang_flowaccu.tif"
+            // ],
+            "program": "/mnt/i/taudem/zhou/FastFlow/FastFlow",
+            "args": [
+                "flowdirection", 
+                "/mnt/i/taudem/data-dem/merit90_china/merit90_china_demfill.tif", 
+                "merit90_china_flowdir2.tif"
+            ],
+            // "program": "/mnt/i/taudem/zhou/FastFlow/a.out",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ]
+        }
+    ]
+}

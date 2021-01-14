@@ -1,10 +1,10 @@
-IDIR =.
 CC=g++
 
 #Compilation flags. Feel free to add optimization options here
-CFLAGS=-I$(IDIR) --std=c++11 -fpermissive -O3 
+CFLAGS=-I$(IDIR) --std=c++11 -m64 -fpermissive -O3 -I /usr/include/gdal -g
 
-ODIR=.
+ODIR=build
+IDIR =src
 
 LIBS=-lm -lgdal 
 
@@ -16,7 +16,7 @@ _OBJ = AccuMethodBTI.o AccuMethodJiang.o AccuMethodRecursive.o AccuMethodWang.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
-$(ODIR)/%.o: %.cpp $(DEPS)
+$(ODIR)/%.o: $(IDIR)/%.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 FastFlow: $(OBJ)
@@ -24,5 +24,7 @@ FastFlow: $(OBJ)
 
 .PHONY: clean
 
+install:
+	sudo cp FastFlow /usr/bin
 clean:
 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~

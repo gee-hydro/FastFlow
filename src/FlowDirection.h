@@ -4,11 +4,13 @@
 #include <stdio.h>
 static const unsigned char NODATA = 0;
 
+typedef long long int bigint;
+
 class FlowDirection
 {
 protected:
-	int width;
-	int height;
+	bigint width;
+	bigint height;
 	unsigned char* pDir;
 public:
 	FlowDirection()
@@ -19,11 +21,11 @@ public:
 	{
 		delete[] pDir;
 	}
-	int getWidth() const
+	bigint getWidth() const
 	{
 		return width;
 	}
-	int getHeight() const
+	bigint getHeight() const
 	{
 		return height;
 	}
