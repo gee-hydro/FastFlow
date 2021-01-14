@@ -2,9 +2,8 @@
 #define FLOWDIRCTION_HEAD_H
 
 #include <stdio.h>
+#include "types.h"
 static const unsigned char NODATA = 0;
-
-typedef long long int bigint;
 
 class FlowDirection
 {

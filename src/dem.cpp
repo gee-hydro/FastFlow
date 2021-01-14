@@ -24,23 +24,23 @@ void DEM::initialElementsNodata()
 {
 	setNoData(pDem, width * height, NO_DATA_VALUE);
 }
-float DEM::asFloat(int row,int col) const
+float DEM::asFloat(bigint row, bigint col) const
 {
 	return pDem[row*width+col];
 }
-void DEM::Set_Value(int row,int col, float z)
+void DEM::Set_Value(bigint row, bigint col, float z)
 {
 	pDem[row*width+col]=z;
 }
 
-bool DEM::is_NoData(int row, int col) const
+bool DEM::is_NoData(bigint row, bigint col) const
 {
 	if (fabs(pDem[row*width+col]-NO_DATA_VALUE)<0.00001) return true;
 	return false;
 }
 void DEM::Assign_NoData()
 {
-	for (int i=0; i<width*height; i++)
+	for (bigint i=0; i<width*height; i++)
 		pDem[i]=NO_DATA_VALUE;
 }
 int DEM::Get_NY() const
@@ -55,11 +55,11 @@ float* DEM::getDEMdata() const
 {
 	return pDem;
 }
-void DEM::SetHeight(int height) 
+void DEM::SetHeight(bigint height) 
 {
 	this->height = height;
 }
-void DEM::SetWidth(int width)
+void DEM::SetWidth(bigint width)
 {
 	this->width = width;
 }
@@ -71,7 +71,7 @@ void DEM::readDEM(const std::string& filePath)
 	is.read((char*)pDem,sizeof(float)*width*height);
 	is.close();
 }
-bool DEM::is_InGrid(int row, int col) const
+bool DEM::is_InGrid(bigint row, bigint col) const
 {
 	if ((row >=0 && row < height) && (col >= 0 && col < width))
 		return true;
@@ -93,7 +93,7 @@ float DEM::getLength(unsigned int dir)
 *	16	0	1		
 *	8	4	2		
 */
-unsigned char DEM::computeDirection(int row, int col, float spill)
+unsigned char DEM::computeDirection(bigint row, bigint col, float spill)
 {
 
 	int iRow, iCol;
@@ -121,7 +121,6 @@ unsigned char DEM::computeDirection(int row, int col, float spill)
 		{
 			lastIndexINGridNoData = i;
 		}
-
 	}
 	return steepestSpill != 255 ? dir[steepestSpill] : dir[lastIndexINGridNoData];
 }

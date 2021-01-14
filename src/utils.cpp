@@ -16,7 +16,7 @@ bool  CreateGeoTIFF(char* path,int height, int width,void* pData, GDALDataType t
     char **papszOptions = NULL;
 	papszOptions = CSLSetNameValue(papszOptions, "COMPRESS", "LZW");
 	papszOptions = CSLSetNameValue(papszOptions, "TILED", "YES");
-	papszOptions = CSLSetNameValue(papszOptions, "BIGTIFF", "IF_NEEDED"); //配置图像信息
+	papszOptions = CSLSetNameValue(papszOptions, "BIGTIFF", "YES"); //配置图像信息
 	poDataset = poDriver->Create(path, width, height, 1, type,
 								 papszOptions);
 	if(poDataset == NULL)
@@ -62,8 +62,8 @@ bool readTIFF(const char* path, DEM& dem, double* geoTransformArray6Eles)
 	poBand = poDataset->GetRasterBand(1);
 	GDALDataType dataType = poBand->GetRasterDataType();
 
-	int width = poBand->GetXSize();
-	int height = poBand->GetYSize();
+	bigint width = poBand->GetXSize();
+	bigint height = poBand->GetYSize();
 	double originNoDataValue = poBand->GetNoDataValue();
 	if (dataType == GDALDataType::GDT_Int16)
 	{
@@ -79,7 +79,7 @@ bool readTIFF(const char* path, DEM& dem, double* geoTransformArray6Eles)
 			return false;
 		}
 		
-		poBand->RasterIO(GF_Read, 0, 0, width, height, 
+		CPLErr status = poBand->RasterIO(GF_Read, 0, 0, width, height, 
 			(void *)fromDem, width, height, GDALDataType::GDT_Int16, 0, 0);
 
 		dem.SetWidth(width);
@@ -115,7 +115,7 @@ bool readTIFF(const char* path, DEM& dem, double* geoTransformArray6Eles)
 			return false;
 		}
 
-		poBand->RasterIO(GF_Read, 0, 0, width, height, 
+		CPLErr status = poBand->RasterIO(GF_Read, 0, 0, width, height, 
 			(void *)fromDem, width, height, GDALDataType::GDT_Int32, 0, 0);
 
 		dem.SetWidth(width);
@@ -147,7 +147,7 @@ bool readTIFF(const char* path, DEM& dem, double* geoTransformArray6Eles)
 			return false;
 		}
 
-		poBand->RasterIO(GF_Read, 0, 0, width, height, 
+		CPLErr status = poBand->RasterIO(GF_Read, 0, 0, width, height, 
 			(void *)dem.getDEMdata(), width, height, GDALDataType::GDT_Float32, 0, 0);
 
 	}
@@ -204,15 +204,13 @@ bool readTIFF(const char* path, GDALDataType type, FlowDirection& dem, double* g
 
 	if (!dem.Allocate()) return false;
 
-	poBand->RasterIO(GF_Read, 0, 0, dem.Get_NX(), dem.Get_NY(), 
+	CPLErr status = poBand->RasterIO(GF_Read, 0, 0, dem.Get_NX(), dem.Get_NY(), 
 		(void *)dem.getData(), dem.Get_NX(), dem.Get_NY(), dataType, 0, 0);
 
 	GDALClose((GDALDatasetH)poDataset);
 	std::cout<<"Finish reading GeoTIFF file!\n";
 	return true;
 }
-
-
 
 /*
 *	8-neighbor

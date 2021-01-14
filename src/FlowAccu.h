@@ -6,8 +6,7 @@
 #include <fstream>
 #include <queue>
 #include <functional>
-
-typedef long long int bigint;
+#include "types.h"
 
 class FlowAccu
 {

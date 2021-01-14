@@ -8,6 +8,7 @@
 #include <functional>
 
 #define NO_DATA_VALUE -9999.0f
+#include "types.h"
 
 /*
 *	reverse flow direction
@@ -27,7 +28,7 @@ class DEM
 {
 protected:
 	float* pDem;
-	long long int width, height;
+	bigint width, height;
 public:
 	DEM()
 	{
@@ -42,19 +43,19 @@ public:
 	void freeMem();
 
 	void initialElementsNodata();
-	float asFloat(int row,int col) const;
-	void Set_Value(int row,int col, float z);
-	bool is_NoData(int row, int col) const;
+	float asFloat(bigint row, bigint col) const;
+	void Set_Value(bigint row, bigint col, float z);
+	bool is_NoData(bigint row, bigint col) const;
 	void Assign_NoData();
 	int Get_NY() const;
 	int Get_NX() const;
 	float* getDEMdata() const;
 
-	void SetHeight(int height);
-	void SetWidth(int width);
+	void SetHeight(bigint height);
+	void SetWidth(bigint width);
 	void readDEM(const std::string& filePath);
-	bool is_InGrid(int row, int col) const;
+	bool is_InGrid(bigint row, bigint col) const;
 	float getLength(unsigned int dir);
-	unsigned char computeDirection(int row, int col, float spill);
+	unsigned char computeDirection(bigint row, bigint col, float spill);
 };
 #endif

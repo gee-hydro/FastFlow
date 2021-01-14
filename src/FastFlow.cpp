@@ -251,13 +251,14 @@ void FillDEMAndComputeFlowDirection(char* inputFile, char* outputDirPath)
 		Node tmpNode = queue.top();
 		queue.pop();
 
-		int row = tmpNode.row;
-		int col = tmpNode.col;
+		bigint row, col;
+		row = tmpNode.row;
+		col = tmpNode.col;
 		float spill = tmpNode.spill;
 
 		for (int i = 0; i < 8; i++)
 		{
-			int iRow, iCol;
+			bigint iRow, iCol;
 			iRow = Get_rowTo(i, row);
 			iCol = Get_colTo(i, col);
 			float iSpill;

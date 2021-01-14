@@ -45,3 +45,24 @@ The algorithms available are described briefly below and in greater detail in th
 1. **Zhou's Algorithm (Zhou)**: Use the algorithm proposed in the manuscript to calculate the flow accumulation matrix.
 
 The test data used in the manuscript can be downloaded at http://www.mngeo.state.mn.us/. You need ArcGIS to convert the DEM into GeoTIFF format.
+
+
+## Known bugs
+
+- bigtiff INPUT error
+
+```bash
+Reading input DEM file...
+Finish reading GeoTIFF file!
+DEM width:84000 height：48000   nums：504000000
+Using the method in Wang&Liu(2006) to fill depressions...
+Start filling depressions and calculationg flow direciton matrix ...
+terminate called after throwing an instance of 'std::bad_alloc'
+  what():  std::bad_alloc
+```
+
+- SAVE BIGTIFF
+```
+ERROR 1: TIFFAppendToStrip:Maximum TIFF file size exceeded. Use BIGTIFF=YES creation option.
+More than 1000 errors or warnings have been reported. No more will be reported from now.
+```
