@@ -1,0 +1,7 @@
+#! /bin/bash
+
+FastFlow Zhou $@
+
+if [ "$#" -gt 1 ]; then
+    gdaladdo -r average $2
+fi 

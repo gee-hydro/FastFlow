@@ -334,3 +334,81 @@ void changeNoDataValue(DEM& toDem, unsigned int width, unsigned int height, floa
 		}
 	}
 }
+
+//Compute statistics for a DEM matrix
+void calculateStatistics(const DEM& dem, double* min, double* max, double* mean, double* stdDev) {
+    int width = dem.Get_NX();
+    int height = dem.Get_NY();
+
+    int validElements = 0;
+    double minValue, maxValue;
+    double sum = 0.0;
+    double sumSqurVal = 0.0;
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            if (!dem.is_NoData(row, col)) {
+                double value = dem.asFloat(row, col);
+                //Initialize minValue and maxValue using the first valid value
+                if (validElements == 0) {
+                    minValue = maxValue = value;
+                }
+                validElements++;
+                if (minValue > value) {
+                    minValue = value;
+                }
+                if (maxValue < value) {
+                    maxValue = value;
+                }
+
+                sum += value;
+                sumSqurVal += (value * value);
+            }
+        }
+    }
+
+    double meanValue = sum / validElements;
+    double stdDevValue = sqrt((sumSqurVal / validElements) - (meanValue * meanValue));
+    *min = minValue;
+    *max = maxValue;
+    *mean = meanValue;
+    *stdDev = stdDevValue;
+}
+
+//Compute statistics for a FlowDirection matrix
+void calculateStatistics(const FlowDirection& dem, double* min, double* max, double* mean, double* stdDev) {
+    int width = dem.Get_NX();
+    int height = dem.Get_NY();
+
+    int validElements = 0;
+    double minValue, maxValue;
+    double sum = 0.0;
+    double sumSqurVal = 0.0;
+    for (int row = 0; row < height; row++) {
+        for (int col = 0; col < width; col++) {
+            if (!dem.is_NoData(row, col)) {
+                double value = dem.asByte(row, col);
+                //Initialize minValue and maxValue using the first valid value
+                if (validElements == 0) {
+                    minValue = maxValue = value;
+                }
+                validElements++;
+                if (minValue > value) {
+                    minValue = value;
+                }
+                if (maxValue < value) {
+                    maxValue = value;
+                }
+
+                sum += value;
+                sumSqurVal += (value * value);
+            }
+        }
+    }
+
+    double meanValue = sum / validElements;
+    double stdDevValue = sqrt((sumSqurVal / validElements) - (meanValue * meanValue));
+    *min = minValue;
+    *max = maxValue;
+    *mean = meanValue;
+    *stdDev = stdDevValue;
+}

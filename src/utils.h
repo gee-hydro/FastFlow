@@ -8,6 +8,9 @@
 #include "FlowDirection.h"
 
 void calculateStatistics(const DEM& dem, double* min, double* max, double* mean, double* stdDev);
+
+void calculateStatistics(const FlowDirection& dem, double* min, double* max, double* mean, double* stdDev);
+
 void filleDEMNew(char* inputFile, char* outputFilledPath, char* outputDirPath, char* outputAccuPath);
 FlowDirection* calculataNIPS(const FlowDirection& dirDEM);
 int Get_rowTo(int dir, int row);

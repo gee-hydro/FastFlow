@@ -7,9 +7,11 @@ set (CMAKE_CXX_STANDARD 11)
 
 # set (shape_srcs ReadOutlets.cpp)
 set (srcs_comm utils.cpp)
+set (srcs_flowdir dem.cpp FlowDirection.cpp ${srcs_comm} )
 set (srcs_accu FlowAccu.cpp AccuMethodBTI.cpp AccuMethodJiang.cpp AccuMethodRecursive.cpp AccuMethodWang.cpp AccuMethodZhou.cpp)
 
-set (FastFlow FastFlow.cpp dem.cpp FlowDirection.cpp  ${srcs_comm} ${srcs_accu})
+set (FASTFlow FastFlow.cpp ${srcs_flowdir} ${srcs_accu})
+set (D8_convert d8_convert.cpp ${srcs_flowdir} )
 
 # MPI is required
 # find_package(MPI REQUIRED)
@@ -21,9 +23,10 @@ set (FastFlow FastFlow.cpp dem.cpp FlowDirection.cpp  ${srcs_comm} ${srcs_accu})
 find_package(GDAL REQUIRED)
 include_directories(${GDAL_INCLUDE_DIR})
 
-add_executable (fastflow ${FastFlow})
+add_executable (FastFlow ${FASTFlow})
+add_executable (d8_convert ${D8_convert})
 
-set (MY_TARGETS fastflow)
+set (MY_TARGETS FastFlow d8_convert)
 
 foreach( c_target ${MY_TARGETS} )
     target_link_libraries(${c_target} ${MPI_LIBRARIES} ${GDAL_LIBRARY})

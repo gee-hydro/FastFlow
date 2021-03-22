@@ -1,0 +1,19 @@
+#! /bin/bash
+
+flowdir=$1
+pour=$1
+region=$3
+
+if [ "$#" -lt 3 ]; then
+    echo "flowbasin flowdir.tif pour.shp changjiang"
+    echo "=========================================="
+    gagewatershed -h
+else
+    gagewatershed -p $flowdir -o $pour -gw watershed_${region}.tif -id basinId_${region}.txt
+    gdal_polygonize.py watershed_${region}.tif shed_${region}.shp shape
+fi 
+
+# FastFlow flowdirection $@
+# if [ "$#" -gt 1 ]; then
+#     gdaladdo -r average $2
+# fi 

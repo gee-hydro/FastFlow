@@ -1,0 +1,9 @@
+#! /bin/bash
+
+FastFlow flowdirection $@
+
+# if [ "$#" -gt 1 ]; then
+#     gdaladdo -r average $2
+# fi 
+
+# gagewatershed -p merit90_china_flowdir_taudem.tif -o regional/pour_${region}.shp -gw watershed_${region}.tif -id ${region}_basins.txt
