@@ -1,9 +1,11 @@
 #include "utils.h"
-#include "gdal_priv.h"
-#include "DEM.h"
 #include <iostream>
-#include "FlowDirection.h"
 #include <string>
+
+#include "DEM.h"
+#include "FlowDirection.h"
+#include "gdal_priv.h"
+#include "ogr_geometry.h"
 
 bool  CreateGeoTIFF(char* path,int height, int width,void* pData, GDALDataType type, double* geoTransformArray6Eles,
 					double* min, double* max, double* mean, double* stdDev, double nodatavalue)
@@ -23,24 +25,32 @@ bool  CreateGeoTIFF(char* path,int height, int width,void* pData, GDALDataType t
 	{
 		const char* errorMsg = CPLGetLastErrorMsg();
 	}
-	if (geoTransformArray6Eles != NULL)
+	if (geoTransformArray6Eles != NULL) {
 		poDataset->SetGeoTransform(geoTransformArray6Eles);
-
-	GDALRasterBand* poBand;
-	poBand= poDataset->GetRasterBand(1);
-	
-	poBand->SetNoDataValue(nodatavalue);
-
-	if (min != NULL && max != NULL && mean != NULL && stdDev != NULL)
-	{
-		poBand->SetStatistics(*min, *max, *mean, *stdDev);
+		// 设置大地坐标系统
+		// https:  //blog.csdn.net/L_J_Kin/article/details/103403122
+		OGRSpatialReference oSRS;
+		char* pszSRS_WKT = NULL;
+		oSRS.SetWellKnownGeogCS("WGS84");
+		oSRS.exportToWkt(&pszSRS_WKT);
+		poDataset->SetProjection(pszSRS_WKT);
+		CPLFree(pszSRS_WKT);  //使用完后释放
 	}
-	CPLErr error = poBand->RasterIO( GF_Write, 0, 0, width, height, 
-                      pData, width, height, type, 0, 0 );    
 
-	GDALClose( (GDALDatasetH) poDataset );
+    GDALRasterBand* poBand;
+    poBand = poDataset->GetRasterBand(1);
 
-	return true;
+    poBand->SetNoDataValue(nodatavalue);
+
+    if (min != NULL && max != NULL && mean != NULL && stdDev != NULL) {
+        poBand->SetStatistics(*min, *max, *mean, *stdDev);
+    }
+    CPLErr error = poBand->RasterIO(GF_Write, 0, 0, width, height,
+                                    pData, width, height, type, 0, 0);
+
+    GDALClose((GDALDatasetH)poDataset);
+
+    return true;
 }
 
 //read GeoTIFF file into a DEM, supporting the reading of data types of int16£¬int32£¬float

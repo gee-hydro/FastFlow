@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1.0)
 project(geehydro)
 
-set(CMAKE_BUILD_TYPE "Debug") 
+# set(CMAKE_BUILD_TYPE "Debug") 
 # Debug Release
 set (CMAKE_CXX_STANDARD 11)
 
@@ -28,7 +28,8 @@ add_executable (d8_convert ${D8_convert})
 
 set (MY_TARGETS FastFlow d8_convert)
 
+set(CMAKE_INSTALL_PREFIX /mnt/o/ChinaBasins/FastFlow)
 foreach( c_target ${MY_TARGETS} )
     target_link_libraries(${c_target} ${MPI_LIBRARIES} ${GDAL_LIBRARY})
-    install(TARGETS ${c_target} DESTINATION geehydro)
+    install(TARGETS ${c_target} DESTINATION bin)
 endforeach( c_target ${MY_TARGETS} )

@@ -2,7 +2,10 @@
 *.tif
 *.xml
 *.ovr
+
+# binary files
 FastFlow
+d8_convert
 
 *.out
 */build

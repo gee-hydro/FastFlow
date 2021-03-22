@@ -1,30 +1,32 @@
-CC=g++
+# CC=g++
 
-#Compilation flags. Feel free to add optimization options here
-CFLAGS=-I$(IDIR) --std=c++11 -m64 -fpermissive -O3 -I /usr/include/gdal -g
+# #Compilation flags. Feel free to add optimization options here
+# CFLAGS=-I$(IDIR) --std=c++11 -m64 -fpermissive -O3 -I /usr/include/gdal -g
 
-ODIR=build
-IDIR =src
+# ODIR=build
+# IDIR =src
 
-LIBS=-lm -lgdal 
+# LIBS=-lm -lgdal 
 
-_DEPS = Node.h DEM.h utils.h FlowDirection.h FlowAccu.h
-DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
+# _DEPS = Node.h DEM.h utils.h FlowDirection.h FlowAccu.h
+# DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = AccuMethodBTI.o AccuMethodJiang.o AccuMethodRecursive.o AccuMethodWang.o AccuMethodZhou.o dem.o FastFlow.o FlowAccu.o FlowDirection.o utils.o
+# _OBJ = AccuMethodBTI.o AccuMethodJiang.o AccuMethodRecursive.o AccuMethodWang.o AccuMethodZhou.o dem.o FastFlow.o FlowAccu.o FlowDirection.o utils.o
 
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
+# OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
-$(ODIR)/%.o: $(IDIR)/%.cpp $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+# $(ODIR)/%.o: $(IDIR)/%.cpp $(DEPS)
+# 	$(CC) -c -o $@ $< $(CFLAGS)
 
-FastFlow: $(OBJ)
-	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
+# FastFlow: $(OBJ)
+# 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
-.PHONY: clean
+# .PHONY: clean
 
 install:
-	sudo cp FastFlow /usr/bin
-clean:
-	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~
+	sudo cp bin/* /usr/bin
+
+# clean:
+# 	rm -f $(ODIR)/*.o *~ core $(INCDIR)/*~
+

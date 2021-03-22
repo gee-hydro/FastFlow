@@ -1,7 +1,7 @@
 #! /bin/bash
 
 flowdir=$1
-pour=$1
+pour=$2
 region=$3
 
 if [ "$#" -lt 3 ]; then
@@ -9,8 +9,10 @@ if [ "$#" -lt 3 ]; then
     echo "=========================================="
     gagewatershed -h
 else
+    echo "gagewatershed -p $flowdir -o $pour -gw watershed_${region}.tif -id basinId_${region}.txt"
     gagewatershed -p $flowdir -o $pour -gw watershed_${region}.tif -id basinId_${region}.txt
     gdal_polygonize.py watershed_${region}.tif shed_${region}.shp shape
+    rm watershed_${region}.tif
 fi 
 
 # FastFlow flowdirection $@
